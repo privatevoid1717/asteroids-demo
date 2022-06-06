@@ -1,0 +1,19 @@
+{
+    "name": "AsteroidDemo.Spawner",
+    "rootNamespace": "",
+    "references": [
+        "GUID:32a4239c39ccd2d4f9519f71763aff9c",
+        "GUID:e66fd5045034fb64bb5054907b9e861c",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:4a7cba5161f721147925560ea195929a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

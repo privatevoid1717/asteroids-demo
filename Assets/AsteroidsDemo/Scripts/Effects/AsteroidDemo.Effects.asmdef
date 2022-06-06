@@ -1,0 +1,16 @@
+{
+    "name": "AsteroidDemo.Effects",
+    "rootNamespace": "",
+    "references": [
+        "GUID:5792dde5ee7cfa246b5cfa880aa8fc21"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

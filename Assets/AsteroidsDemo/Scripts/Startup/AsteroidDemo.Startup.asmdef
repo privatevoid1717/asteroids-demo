@@ -1,0 +1,20 @@
+{
+    "name": "AsteroidDemo.Startup",
+    "rootNamespace": "",
+    "references": [
+        "GUID:773fd3c8c5b87d44bb25a50c104685f6",
+        "GUID:4a7cba5161f721147925560ea195929a",
+        "GUID:5792dde5ee7cfa246b5cfa880aa8fc21",
+        "GUID:32a4239c39ccd2d4f9519f71763aff9c",
+        "GUID:2b5de9bde267af4489dc9bd99b512b15"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
