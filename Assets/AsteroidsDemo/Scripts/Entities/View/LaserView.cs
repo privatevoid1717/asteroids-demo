@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AsteroidsDemo.Entities.Weapon.Laser
+namespace AsteroidsDemo.Scripts.Entities.View
 {
     public class LaserView : MonoBehaviour
     {
@@ -9,8 +9,6 @@ namespace AsteroidsDemo.Entities.Weapon.Laser
         private void Awake()
         {
             _lineRenderer = GetComponent<LineRenderer>();
-            // _lineRenderer.startWidth = 0.05f;
-            // _lineRenderer.endWidth = 0.01f;
         }
 
         public void DrawLaser(Vector3 start, Vector3 end)

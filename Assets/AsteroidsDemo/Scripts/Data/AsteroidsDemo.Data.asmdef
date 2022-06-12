@@ -1,0 +1,19 @@
+{
+    "name": "AsteroidsDemo.Data",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4edd528d3881010409a4538601da9df6",
+        "GUID:e66fd5045034fb64bb5054907b9e861c",
+        "GUID:773fd3c8c5b87d44bb25a50c104685f6",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

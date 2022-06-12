@@ -1,0 +1,17 @@
+{
+    "name": "AsteroidsDemo.Services.PositionResolver",
+    "rootNamespace": "",
+    "references": [
+        "GUID:773fd3c8c5b87d44bb25a50c104685f6",
+        "GUID:4c8256a2f408d604cb18a02ff0dbbf77"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

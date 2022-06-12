@@ -1,42 +1,82 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AsteroidsDemo.Scripts.Data;
+using AsteroidsDemo.Scripts.Effects;
 using AsteroidsDemo.Scripts.Entities.Controller;
+using AsteroidsDemo.Scripts.Entities.Controller.Impl;
 using AsteroidsDemo.Scripts.Interfaces;
-using AsteroidsDemo.Scripts.Messaging;
-using AsteroidsDemo.Scripts.Messaging.Messages;
+using AsteroidsDemo.Scripts.IOC;
+using AsteroidsDemo.Scripts.Messages;
+using AsteroidsDemo.Scripts.Services.Input;
+using AsteroidsDemo.Scripts.Services.Messaging;
+using AsteroidsDemo.Scripts.Services.PositionResolver;
+using AsteroidsDemo.Scripts.Spawn;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace AsteroidsDemo.Scripts.Startup
 {
     public class Game : MonoBehaviour
     {
-        [Inject] private Spawner.Spawner _spawner;
+        private Spawner _spawner;
 
         [SerializeField] private int minAsteroids = 3;
 
-        private readonly IList<IRunnable> _runnables = new List<IRunnable>();
+        [SerializeField] private PrefabData prefabData;
+
+        private readonly List<IRunnable> _runnables = new();
+
+        private IServiceLocator _serviceLocator;
 
         private void Awake()
         {
             Screen.SetResolution(1920, 1080, false);
             // TODO расчитывать границы исходя из соотношения сторон (сейчас работает корректно только на 16:9)
+
+            InitializeServices();
+
+            _spawner =
+                Instantiate(prefabData.SpawnerPrefab)
+                    .GetComponent<Spawner>()
+                    .WithServiceLocator(_serviceLocator)
+                    .WithPrefabs(prefabData);
+
+            Instantiate(prefabData.VfxPlayer.GetComponent<VfxPlayer>())
+                .WithMessenger(_serviceLocator.GetService<IMessenger>())
+                .WithPrefabs(prefabData);
+
+            var canvas = FindObjectOfType<Canvas>();
+            Instantiate(prefabData.Hud, canvas.transform).WithMessenger(_serviceLocator.GetService<IMessenger>());
+            Instantiate(prefabData.GameOver, canvas.transform).WithMessenger(_serviceLocator.GetService<IMessenger>());
+        }
+
+
+        private void InitializeServices()
+        {
+            var messenger = new SimpleMessenger();
+            var inputTracker = new InputTracker(Instantiate(prefabData.PlayerInputPrefab), messenger);
+
+            _serviceLocator = new ServiceLocator()
+                .WithService(messenger)
+                .WithService(inputTracker)
+                .WithService(new PortableObjectPositionResolver(Camera.main.GetComponent<ITiledCamera>()));
         }
 
 
         private void OnEnable()
         {
-            SimpleMessenger.Subscribe<FireMessage>(OnFire);
-            SimpleMessenger.Subscribe<AsteroidDestroyedMessage>(OnAsteroidDestroyed);
-            SimpleMessenger.Subscribe<AlienDestroyedMessage>(OnAlienDestroyedDestroyed);
-            SimpleMessenger.Subscribe<NewGameMessage>(OnNewGame);
+            var messenger = _serviceLocator.GetService<IMessenger>();
+
+            messenger.Subscribe<FireMessage>(OnFire);
+            messenger.Subscribe<AsteroidDestroyedMessage>(OnAsteroidDestroyed);
+            messenger.Subscribe<AlienDestroyedMessage>(OnAlienDestroyedDestroyed);
+            messenger.Subscribe<NewGameMessage>(OnNewGame);
         }
 
         private void OnNewGame(NewGameMessage obj)
         {
-            SimpleMessenger.UnsubscribeAll();
+            _serviceLocator.GetService<IMessenger>().UnsubscribeAll();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
@@ -77,7 +117,7 @@ namespace AsteroidsDemo.Scripts.Startup
         private void Start()
         {
             var player = _spawner.SpawnPlayer(Vector3.zero);
-            SimpleMessenger.Publish(new PlayerSpawnedMessage()
+            _serviceLocator.GetService<IMessenger>().Publish(new PlayerSpawnedMessage()
             {
                 PlayerModel = player.Model
             });

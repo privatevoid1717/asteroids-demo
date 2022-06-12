@@ -1,27 +1,26 @@
 ﻿using System.Text;
-using AsteroidsDemo.Scripts.Entities.Model;
-using AsteroidsDemo.Scripts.Messaging;
-using AsteroidsDemo.Scripts.Messaging.Messages;
+using AsteroidsDemo.Scripts.Interfaces.Model;
+using AsteroidsDemo.Scripts.Messages;
 using TMPro;
 using UnityEngine;
 
 namespace AsteroidsDemo.Scripts.UI
 {
-    public class Hud : MonoBehaviour
+    public class Hud : UIComponent
     {
         [field: SerializeField] private TextMeshProUGUI coords;
 
-        private SpaceShipModel _playerModel;
+        private ISpaceShipModel _playerModel;
         private readonly StringBuilder _stringBuilder = new StringBuilder();
-
-        private void OnEnable()
+        
+        private void Awake()
         {
-            SimpleMessenger.Subscribe<PlayerSpawnedMessage>(OnPlayerSpawned);
+           
         }
 
         private void OnDisable()
         {
-            SimpleMessenger.Unsubscribe<PlayerSpawnedMessage>(OnPlayerSpawned);
+            Messenger.Unsubscribe<PlayerSpawnedMessage>(OnPlayerSpawned);
         }
 
         private void OnPlayerSpawned(PlayerSpawnedMessage obj)
@@ -51,6 +50,11 @@ namespace AsteroidsDemo.Scripts.UI
                 .Append("  ");
 
             coords.text = _stringBuilder.ToString();
+        }
+
+        protected override void Subscribe()
+        {
+            Messenger.Subscribe<PlayerSpawnedMessage>(OnPlayerSpawned);
         }
     }
 }

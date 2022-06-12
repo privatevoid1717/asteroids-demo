@@ -2,13 +2,7 @@
     "name": "AsteroidDemo.IOC",
     "rootNamespace": "",
     "references": [
-        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
-        "GUID:2b5de9bde267af4489dc9bd99b512b15",
-        "GUID:7ece079585889a64f840af820817d21a",
-        "GUID:74e4403bfca35f849a990c9e0061f52a",
-        "GUID:773fd3c8c5b87d44bb25a50c104685f6",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:7ed530c7f1043594cb7e0ac532cc28c1"
+        "GUID:773fd3c8c5b87d44bb25a50c104685f6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

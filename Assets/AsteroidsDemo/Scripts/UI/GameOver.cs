@@ -1,21 +1,19 @@
-﻿using AsteroidsDemo.Scripts.Entities.Model;
-using AsteroidsDemo.Scripts.Messaging;
-using AsteroidsDemo.Scripts.Messaging.Messages;
+﻿using AsteroidsDemo.Scripts.Interfaces.Model;
+using AsteroidsDemo.Scripts.Messages;
 using TMPro;
 using UnityEngine;
 
 namespace AsteroidsDemo.Scripts.UI
 {
-    public class GameOver : MonoBehaviour
+    public class GameOver : UIComponent
     {
         [SerializeField] private TextMeshProUGUI score;
 
-        private SpaceShipModel _playerModel;
+        private ISpaceShipModel _playerModel;
 
-        private void Awake()
+        private void Start()
         {
-            SimpleMessenger.Subscribe<PlayerSpawnedMessage>(OnPlayerSpawned);
-            SimpleMessenger.Subscribe<PlayerDestroyedMessage>(OnPlayerDestroyed);
+
 
             gameObject.SetActive(false);
         }
@@ -33,7 +31,13 @@ namespace AsteroidsDemo.Scripts.UI
 
         public void NewGame()
         {
-            SimpleMessenger.Publish(new NewGameMessage());
+            Messenger.Publish(new NewGameMessage());
+        }
+
+        protected override void Subscribe()
+        {
+            Messenger.Subscribe<PlayerSpawnedMessage>(OnPlayerSpawned);
+            Messenger.Subscribe<PlayerDestroyedMessage>(OnPlayerDestroyed);
         }
     }
 }

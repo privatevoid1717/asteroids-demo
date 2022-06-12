@@ -1,10 +1,9 @@
 ﻿using System;
-using AsteroidsDemo.Common.Scripts;
-using AsteroidsDemo.Infrastructure.Scripts.PortableObject;
+using AsteroidsDemo.Scripts.Entities.View.PortableObject;
 using AsteroidsDemo.Scripts.Interfaces.View;
 using UnityEngine;
 
-namespace AsteroidsDemo.SpaceShip.Scripts.View
+namespace AsteroidsDemo.Scripts.Entities.View
 {
     public class BulletView : PortableObjectView
     {

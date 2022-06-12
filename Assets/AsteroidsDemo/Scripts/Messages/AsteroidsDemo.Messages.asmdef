@@ -1,0 +1,16 @@
+{
+    "name": "AsteroidsDemo.Messages",
+    "rootNamespace": "",
+    "references": [
+        "GUID:773fd3c8c5b87d44bb25a50c104685f6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

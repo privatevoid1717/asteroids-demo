@@ -1,5 +1,6 @@
-﻿using AsteroidsDemo.Scripts.Messaging;
-using AsteroidsDemo.Scripts.Messaging.Messages;
+﻿using AsteroidsDemo.Scripts.Data;
+using AsteroidsDemo.Scripts.Interfaces;
+using AsteroidsDemo.Scripts.Messages;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,9 +10,23 @@ namespace AsteroidsDemo.Scripts.Effects
     {
         [SerializeField] private ParticleSystem explosionEffect;
 
-        private void OnEnable()
+        private IMessenger _messenger;
+
+        public VfxPlayer WithMessenger(IMessenger messenger)
         {
-            SimpleMessenger.Subscribe<DestroyedMessage>(OnDestroyed);
+            _messenger = messenger;
+            return this;
+        }
+
+        public VfxPlayer WithPrefabs(PrefabData data)
+        {
+            explosionEffect = data.ExplosionEffect;
+            return this;
+        }
+
+        private void Start()
+        {
+            _messenger.Subscribe<DestroyedMessage>(OnDestroyed);
         }
 
         private void OnDestroyed(DestroyedMessage message)

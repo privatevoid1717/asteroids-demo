@@ -1,8 +1,7 @@
-﻿using AsteroidsDemo.Common.Scripts;
-using AsteroidsDemo.Entities.Weapon.Laser;
+﻿using AsteroidsDemo.Scripts.Entities.View;
+using AsteroidsDemo.Scripts.Interfaces;
 using AsteroidsDemo.Scripts.Interfaces.View;
-using AsteroidsDemo.Scripts.Messaging;
-using AsteroidsDemo.Scripts.Messaging.Messages;
+using AsteroidsDemo.Scripts.Messages;
 using UnityEngine;
 
 namespace AsteroidsDemo.Scripts.Entities.Controller
@@ -16,10 +15,12 @@ namespace AsteroidsDemo.Scripts.Entities.Controller
         private Vector3 _direction;
         private readonly LaserView _view;
         private LayerMask _borderLayer = LayerMask.GetMask("ScreenBorder");
+        private readonly IMessenger _messenger;
 
-        public LaserController(LaserView view)
+        public LaserController(LaserView view, IMessenger messenger)
         {
             _view = view;
+            _messenger = messenger;
         }
 
         public void Hold()
@@ -41,7 +42,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller
             {
                 if (hit.collider.CompareTag("Alien") || hit.collider.CompareTag("asteroid"))
                 {
-                    SimpleMessenger.Publish(new HitMessage()
+                    _messenger.Publish(new HitMessage()
                     {
                         View = hit.collider.GetComponent<IObjectView>()
                     });
@@ -72,7 +73,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller
                             {
                                 if (hit3.collider.CompareTag("Alien") || hit3.collider.CompareTag("asteroid"))
                                 {
-                                    SimpleMessenger.Publish(new HitMessage()
+                                    _messenger.Publish(new HitMessage()
                                     {
                                         View = hit3.collider.GetComponent<IObjectView>()
                                     });
