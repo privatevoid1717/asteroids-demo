@@ -14,6 +14,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
     {
         private readonly IAsteroidView _asteroidView;
         private readonly IModel _model;
+        private readonly IMessenger _messenger;
         private readonly CustomRigidbody _rigidbody = new();
         private Vector3 _randomDirection;
         private readonly float _randomTorque;
@@ -43,19 +44,20 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
             _randomDirection = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
             _randomTorque = Random.Range(-0.1f, 0.1f);
             _rigidbody.MaxSpeed = Random.Range(0f, 3f);
+            _messenger = serviceLocator.GetService<IMessenger>();
             _asteroidView.ViewStarted += OnStarted;
         }
 
         private void OnStarted(object sender, EventArgs e)
         {
-            Messenger.Subscribe<HitMessage>(OnBulletHit, m => m.View == _asteroidView);
+            _messenger.Subscribe<HitMessage>(OnBulletHit, m => m.View == _asteroidView);
         }
 
         private void OnBulletHit(HitMessage obj)
         {
             IsAlive = false;
 
-            Messenger.Publish(new AsteroidDestroyedMessage()
+            _messenger.Publish(new AsteroidDestroyedMessage()
             {
                 Position = _asteroidView.Position,
                 IsDebris = IsDebris
@@ -63,7 +65,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
 
             _asteroidView.Destroy();
 
-            Messenger.Unsubscribe<HitMessage>(OnBulletHit);
+            _messenger.Unsubscribe<HitMessage>(OnBulletHit);
         }
 
         public override void RunFixedUpdate()

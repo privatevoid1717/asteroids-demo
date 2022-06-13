@@ -1140,7 +1140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57885ec4ba7c4074b843a0b5019996c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minAsteroids: 3
+  minAsteroids: 4
   prefabData: {fileID: 11400000, guid: b6b40e03c76ed5240bb23a1029abfa79, type: 2}
 --- !u!4 &2116338235
 Transform:

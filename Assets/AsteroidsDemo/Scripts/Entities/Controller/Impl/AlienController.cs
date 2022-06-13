@@ -14,6 +14,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         private readonly CustomRigidbody _rigidbody = new();
         private readonly IModel _playerModel;
         private readonly IModel _model;
+        private readonly IMessenger _messenger;
 
         public AlienController(
             IAlienView alienView,
@@ -26,12 +27,13 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
             _playerModel = playerModel;
             _alienView = alienView;
             _rigidbody.MaxSpeed = 2f;
+            _messenger = serviceLocator.GetService<IMessenger>();
             _alienView.ViewStarted += OnStarted;
         }
 
         private void OnStarted(object sender, EventArgs e)
         {
-            Messenger.Subscribe<HitMessage>(OnHit, m => m.View == _alienView);
+            _messenger.Subscribe<HitMessage>(OnHit, m => m.View == _alienView);
         }
 
 
@@ -39,14 +41,14 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         {
             IsAlive = false;
 
-            Messenger.Publish(new AlienDestroyedMessage()
+            _messenger.Publish(new AlienDestroyedMessage()
             {
                 Position = _alienView.Position,
             });
 
             _alienView.Destroy();
 
-            Messenger.Unsubscribe<HitMessage>(OnHit);
+            _messenger.Unsubscribe<HitMessage>(OnHit);
         }
 
         public override void RunFixedUpdate()

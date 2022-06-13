@@ -23,7 +23,7 @@ namespace AsteroidsDemo.Scripts.Entities.View
         public void Erase()
         {
 
-            _lineRenderer.SetPositions(new Vector3[] {Vector3.zero, Vector3.zero});
+            _lineRenderer.SetPositions(new[] {Vector3.zero, Vector3.zero});
         }
     }
 }

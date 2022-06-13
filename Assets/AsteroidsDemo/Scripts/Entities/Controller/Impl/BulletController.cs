@@ -11,6 +11,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
     {
         private readonly IBulletView _view;
         private readonly IModel _model;
+        private readonly IMessenger _messenger;
         private float _lifeTime = 0.7f; // TODO в модель
 
         public void RunInUpdate()
@@ -32,6 +33,8 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         public BulletController(IBulletView view, IModel model, IServiceLocator serviceLocator) :
             base(view, model, serviceLocator)
         {
+            _messenger = serviceLocator.GetService<IMessenger>();
+            
             _view = view;
             _view.OnHit += OnHit;
 
@@ -40,7 +43,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
 
         private void OnHit(object sender, IObjectView affectedView)
         {
-            Messenger.Publish(new HitMessage()
+            _messenger.Publish(new HitMessage()
             {
                 View = affectedView
             });

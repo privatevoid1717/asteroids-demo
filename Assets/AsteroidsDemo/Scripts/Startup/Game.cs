@@ -130,7 +130,7 @@ namespace AsteroidsDemo.Scripts.Startup
 
             _chunkRunner.Add(player);
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < minAsteroids; i++)
             {
                 _chunkRunner.Add(
                     _spawner.SpawnAsteroid(new Vector3(Random.Range(-100, 100), Random.Range(-100, 100),

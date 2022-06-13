@@ -17,6 +17,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         private readonly LaserController _laser;
         private readonly Timer _timer = new();
         private readonly IInputTracker _inputTracker;
+        private readonly IMessenger _messenger;
 
         private const float MaxEnergy = 10f;
         private const float MaxEnergyCooldown = 10f;
@@ -32,6 +33,8 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         {
             _inputTracker = serviceLocator.GetService<IInputTracker>();
 
+            _messenger = serviceLocator.GetService<IMessenger>();
+
             _playerShipView = playerShipView;
 
             Model = model;
@@ -41,7 +44,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
             Model.MaxCooldown = MaxEnergyCooldown;
             _laser = laser;
 
-            Messenger.Subscribe<DestroyedMessage>(OnTargetDestroyed);
+            _messenger.Subscribe<DestroyedMessage>(OnTargetDestroyed);
 
             _playerShipView.PlayerWasHit += OnPlayerWasHit;
             _inputTracker.Fire += OnFire;
@@ -53,7 +56,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
 
         private void OnFire(object sender, EventArgs e)
         {
-            Messenger.Publish(new FireMessage()
+            _messenger.Publish(new FireMessage()
             {
                 Position = _playerShipView.Position, EulerAngles = _playerShipView.EulerAngles
             });
@@ -63,7 +66,9 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         {
             _timer.Elapsed -= Elapsed;
             _playerShipView.PlayerWasHit -= OnPlayerWasHit;
-            Messenger.Publish(new PlayerDestroyedMessage());
+            _messenger.Publish(new PlayerDestroyedMessage());
+            
+            // TODO уничтожать корабль
         }
 
         private void OnTargetDestroyed(DestroyedMessage obj)
