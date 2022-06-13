@@ -13,8 +13,6 @@ namespace AsteroidsDemo.Scripts.UI
 
         private void Start()
         {
-
-
             gameObject.SetActive(false);
         }
 

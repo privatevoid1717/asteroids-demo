@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AsteroidsDemo.Scripts.Data;
+﻿using AsteroidsDemo.Scripts.Data;
 using AsteroidsDemo.Scripts.Effects;
 using AsteroidsDemo.Scripts.Entities.Controller.Impl;
 using AsteroidsDemo.Scripts.Interfaces;
+using AsteroidsDemo.Scripts.Interfaces.Model;
 using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Messages;
 using AsteroidsDemo.Scripts.ServiceResolving;
@@ -11,6 +10,7 @@ using AsteroidsDemo.Scripts.Services.Input;
 using AsteroidsDemo.Scripts.Services.Messaging;
 using AsteroidsDemo.Scripts.Services.PositionResolver;
 using AsteroidsDemo.Scripts.Spawn;
+using AsteroidsDemo.Scripts.Startup.Chunks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -25,9 +25,11 @@ namespace AsteroidsDemo.Scripts.Startup
 
         [SerializeField] private PrefabData prefabData;
 
-        private readonly List<IRunnable> _runnables = new();
+        private readonly ChunkRunner _chunkRunner = new();
 
         private IServiceLocator _serviceLocator;
+
+        private ISpaceShipModel _playerModel;
 
         private void Awake()
         {
@@ -84,10 +86,9 @@ namespace AsteroidsDemo.Scripts.Startup
 
         private void OnAlienDestroyedDestroyed(AlienDestroyedMessage obj)
         {
-            _runnables.Add(
+            _chunkRunner.Add(
                 _spawner.SpawnAlien(
-                    new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0),
-                    ((PlayerShipController) _runnables.Single(r => r is PlayerShipController)).Model));
+                    new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0), _playerModel));
         }
 
         private void OnAsteroidDestroyed(AsteroidDestroyedMessage asteroidDestroyedMessage)
@@ -98,13 +99,13 @@ namespace AsteroidsDemo.Scripts.Startup
                 {
                     var debris = _spawner.SpawnAsteroid(asteroidDestroyedMessage.Position);
                     debris.IsDebris = true;
-                    _runnables.Add(debris);
+                    _chunkRunner.Add(debris);
                 }
             }
 
-            if (_runnables.Where(r => r is AsteroidController).Count(c => c.IsAlive) < minAsteroids)
+            if (_chunkRunner.Count<AsteroidController>() < minAsteroids)
             {
-                _runnables.Add(
+                _chunkRunner.Add(
                     _spawner.SpawnAsteroid(new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0)));
             }
         }
@@ -113,27 +114,30 @@ namespace AsteroidsDemo.Scripts.Startup
         private void OnFire(FireMessage fireMessage)
         {
             var bullet = _spawner.SpawnBullet(fireMessage.Position, Quaternion.Euler(fireMessage.EulerAngles));
-            _runnables.Add(bullet);
+            _chunkRunner.Add(bullet);
         }
 
         private void Start()
         {
             var player = _spawner.SpawnPlayer(Vector3.zero);
+
+            _playerModel = player.Model;
+
             _serviceLocator.GetService<IMessenger>().Publish(new PlayerSpawnedMessage()
             {
                 PlayerModel = player.Model
             });
 
-            _runnables.Add(player);
+            _chunkRunner.Add(player);
 
             for (var i = 0; i < 3; i++)
             {
-                _runnables.Add(
+                _chunkRunner.Add(
                     _spawner.SpawnAsteroid(new Vector3(Random.Range(-100, 100), Random.Range(-100, 100),
                         0))); // TODO не спавнить на игрока
             }
 
-            _runnables.Add(
+            _chunkRunner.Add(
                 _spawner.SpawnAlien(
                     new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0),
                     player.Model)); // TODO не спавнить на игрока
@@ -141,22 +145,14 @@ namespace AsteroidsDemo.Scripts.Startup
 
         private void FixedUpdate()
         {
-            _runnables.RemoveAll(x => !x.IsAlive);
-
-            for (int i = 0; i < _runnables.Count; i++)
-            {
-                _runnables[i].RunFixedUpdate();
-            }
+            _chunkRunner.RemoveNonAlive();
+            _chunkRunner.RunFixedUpdate();
         }
 
         private void Update()
         {
-            _runnables.RemoveAll(x => !x.IsAlive);
-            
-            for (int i = 0; i < _runnables.Count; i++)
-            {
-                _runnables[i].RunInUpdate();
-            }
+            _chunkRunner.RemoveNonAlive();
+            _chunkRunner.RunUpdate();
         }
     }
 }
