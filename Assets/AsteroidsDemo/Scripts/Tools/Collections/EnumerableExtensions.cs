@@ -19,7 +19,7 @@ namespace AsteroidsDemo.Scripts.Tools.Collections
             Action<T, int> action)
         {
             var enumerable = source as T[] ?? source.ToArray();
-            for (var i = 0; i < enumerable.Count(); i++)
+            for (var i = 0; i < enumerable.Length; i++)
             {
                 action(enumerable.ElementAt(i), i);
             }

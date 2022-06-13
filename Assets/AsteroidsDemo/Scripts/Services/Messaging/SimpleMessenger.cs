@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AsteroidsDemo.Scripts.Interfaces.Services;
-using AsteroidsDemo.Scripts.Tools.Collections;
 
 namespace AsteroidsDemo.Scripts.Services.Messaging
 {
@@ -14,21 +13,17 @@ namespace AsteroidsDemo.Scripts.Services.Messaging
         {
             var messageType = message.GetType();
 
-            for (int i = 0; i < _subscriptions.Count; i++)
-            {
-                var callback = _subscriptions[i];
+            var subscriptions = _subscriptions.ToArray();
 
-                if (!callback.Value.IsActive)
+            for (int i = 0; i < subscriptions.Length; i++)
+            {
+                var (key, value) = subscriptions[i];
+                if ((messageType == key || messageType.IsSubclassOf(key)) &&
+                    value.Precondition(message))
                 {
-                    _subscriptions.RemoveAt(i);
-                    i--;
+                    value.Callback(message);
                 }
             }
-
-            _subscriptions.ToList()
-                .Where(a => (messageType == a.Key || messageType.IsSubclassOf(a.Key)) &&
-                            a.Value.Precondition(message))
-                .ForEach(act => act.Value.Callback(message));
         }
 
         public void Subscribe<T>(Action<T> action, Func<T, bool> precondition = null)
@@ -56,7 +51,7 @@ namespace AsteroidsDemo.Scripts.Services.Messaging
             var subscription = _subscriptions.FirstOrDefault(x => x.Value.Id == action.GetHashCode());
             if (subscription.Key != null)
             {
-                subscription.Value.IsActive = false;
+                _subscriptions.Remove(subscription);
             }
         }
 
@@ -70,8 +65,6 @@ namespace AsteroidsDemo.Scripts.Services.Messaging
             public int Id { get; }
             public Action<object> Callback { get; }
             public Func<object, bool> Precondition { get; }
-
-            public bool IsActive { get; set; } = true;
 
             public static Subscription Create<T>(Action<T> callback, Func<T, bool> precondition)
             {

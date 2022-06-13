@@ -33,7 +33,7 @@ namespace AsteroidsDemo.Scripts.Startup
         {
             // TODO расчитывать границы исходя из соотношения сторон (сейчас работает корректно только на 16:9)
             Screen.SetResolution(1920, 1080, false);
-            
+
             InitializeServices();
 
             var messenger = _serviceLocator.GetService<IMessenger>();
@@ -141,35 +141,21 @@ namespace AsteroidsDemo.Scripts.Startup
 
         private void FixedUpdate()
         {
+            _runnables.RemoveAll(x => !x.IsAlive);
+
             for (int i = 0; i < _runnables.Count; i++)
             {
-                var runnable = _runnables[i];
-                if (!runnable.IsAlive)
-                {
-                    _runnables.RemoveAt(i);
-                    i--;
-                }
-                else
-                {
-                    runnable.RunFixedUpdate();
-                }
+                _runnables[i].RunFixedUpdate();
             }
         }
 
         private void Update()
         {
+            _runnables.RemoveAll(x => !x.IsAlive);
+            
             for (int i = 0; i < _runnables.Count; i++)
             {
-                var runnable = _runnables[i];
-                if (!runnable.IsAlive)
-                {
-                    _runnables.RemoveAt(i);
-                    i--;
-                }
-                else
-                {
-                    runnable.RunInUpdate();
-                }
+                _runnables[i].RunInUpdate();
             }
         }
     }
