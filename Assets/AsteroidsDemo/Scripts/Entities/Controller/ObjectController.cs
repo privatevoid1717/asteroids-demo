@@ -1,5 +1,6 @@
 ﻿using AsteroidsDemo.Scripts.Interfaces;
 using AsteroidsDemo.Scripts.Interfaces.Model;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Interfaces.View;
 
 namespace AsteroidsDemo.Scripts.Entities.Controller

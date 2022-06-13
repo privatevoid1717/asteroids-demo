@@ -3,8 +3,8 @@ using AsteroidsDemo.Scripts.Entities.Controller;
 using AsteroidsDemo.Scripts.Entities.Controller.Impl;
 using AsteroidsDemo.Scripts.Entities.Model;
 using AsteroidsDemo.Scripts.Entities.View;
-using AsteroidsDemo.Scripts.Interfaces;
 using AsteroidsDemo.Scripts.Interfaces.Model;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 using UnityEngine;
 
 namespace AsteroidsDemo.Scripts.Spawn

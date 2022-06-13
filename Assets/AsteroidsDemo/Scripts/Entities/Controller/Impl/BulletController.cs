@@ -1,6 +1,6 @@
-﻿using AsteroidsDemo.Scripts.Entities.View;
-using AsteroidsDemo.Scripts.Interfaces;
+﻿using AsteroidsDemo.Scripts.Interfaces;
 using AsteroidsDemo.Scripts.Interfaces.Model;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Interfaces.View;
 using AsteroidsDemo.Scripts.Messages;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
 {
     public class BulletController : ObjectController, IRunnable
     {
-        private readonly BulletView _view;
+        private readonly IBulletView _view;
         private readonly IModel _model;
         private float _lifeTime = 0.7f; // TODO в модель
 
@@ -22,14 +22,14 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
                 return;
             }
 
-            _model.Position += _view.transform.up * (10f * Time.deltaTime);
+            _model.Position += _view.Direction * (10f * Time.deltaTime);
 
             _lifeTime -= Time.deltaTime;
         }
 
         public bool IsAlive { get; private set; } = true;
 
-        public BulletController(BulletView view, IModel model, IServiceLocator serviceLocator) :
+        public BulletController(IBulletView view, IModel model, IServiceLocator serviceLocator) :
             base(view, model, serviceLocator)
         {
             _view = view;

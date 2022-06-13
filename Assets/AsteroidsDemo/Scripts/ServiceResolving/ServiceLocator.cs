@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AsteroidsDemo.Scripts.Interfaces;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 
-namespace AsteroidsDemo.Scripts.IOC
+namespace AsteroidsDemo.Scripts.ServiceResolving
 {
     public class ServiceLocator : IServiceLocator
     {
@@ -10,7 +10,7 @@ namespace AsteroidsDemo.Scripts.IOC
 
         public T GetService<T>() where T : IService
         {
-            var service = _services.SingleOrDefault(x => x is T);
+            var service = _services.Single(x => x is T);
             return (T) service;
         }
 

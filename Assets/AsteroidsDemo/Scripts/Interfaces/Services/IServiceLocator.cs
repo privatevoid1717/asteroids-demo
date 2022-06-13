@@ -1,10 +1,8 @@
-﻿namespace AsteroidsDemo.Scripts.Interfaces
+﻿namespace AsteroidsDemo.Scripts.Interfaces.Services
 {
     public interface IServiceLocator
     {
         T GetService<T>() where T : IService;
-
-        static IServiceLocator Instance { get; }
 
         IServiceLocator WithService(IService service);
     }

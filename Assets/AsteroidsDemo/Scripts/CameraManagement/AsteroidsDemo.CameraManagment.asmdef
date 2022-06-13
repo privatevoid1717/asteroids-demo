@@ -1,10 +1,9 @@
 {
-    "name": "AsteroidDemo.Effects",
+    "name": "AsteroidsDemo.CameraManagment",
     "rootNamespace": "",
     "references": [
         "GUID:773fd3c8c5b87d44bb25a50c104685f6",
-        "GUID:678b1cd9be080e74d85ec58bc7086edc",
-        "GUID:ecf300deca009cf4a80da66230b9f8ac"
+        "GUID:15fc0a57446b3144c949da3e2b9737a9"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

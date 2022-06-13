@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AsteroidsDemo.Scripts.Interfaces
+namespace AsteroidsDemo.Scripts.Interfaces.Services
 {
     public interface IPortableObjectPositionResolver : IService
     {

@@ -1,5 +1,5 @@
 ﻿using System;
-using AsteroidsDemo.Scripts.Interfaces;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Messages;
 using UnityEngine.InputSystem;
 

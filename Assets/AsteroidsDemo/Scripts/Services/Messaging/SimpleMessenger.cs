@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AsteroidsDemo.Scripts.Interfaces;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Tools.Collections;
 
 namespace AsteroidsDemo.Scripts.Services.Messaging

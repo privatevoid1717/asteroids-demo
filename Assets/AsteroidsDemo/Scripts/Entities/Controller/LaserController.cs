@@ -1,5 +1,4 @@
-﻿using AsteroidsDemo.Scripts.Entities.View;
-using AsteroidsDemo.Scripts.Interfaces;
+﻿using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Interfaces.View;
 using AsteroidsDemo.Scripts.Messages;
 using UnityEngine;
@@ -13,11 +12,11 @@ namespace AsteroidsDemo.Scripts.Entities.Controller
         private bool _isFiring;
         private Vector3 _position;
         private Vector3 _direction;
-        private readonly LaserView _view;
+        private readonly ILaserView _view;
         private LayerMask _borderLayer = LayerMask.GetMask("ScreenBorder");
         private readonly IMessenger _messenger;
 
-        public LaserController(LaserView view, IMessenger messenger)
+        public LaserController(ILaserView view, IMessenger messenger)
         {
             _view = view;
             _messenger = messenger;

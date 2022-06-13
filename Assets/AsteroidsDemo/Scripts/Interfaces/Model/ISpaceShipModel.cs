@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace AsteroidsDemo.Scripts.Interfaces.Model
+﻿namespace AsteroidsDemo.Scripts.Interfaces.Model
 {
     public interface ISpaceShipModel : IModel
     {

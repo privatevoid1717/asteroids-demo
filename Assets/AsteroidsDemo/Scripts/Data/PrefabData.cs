@@ -1,5 +1,4 @@
 ﻿using AsteroidsDemo.Scripts.Entities.View;
-using AsteroidsDemo.Scripts.Interfaces;
 using AsteroidsDemo.Scripts.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;

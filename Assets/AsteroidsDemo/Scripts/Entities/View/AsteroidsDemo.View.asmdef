@@ -1,11 +1,7 @@
 {
-    "name": "AsteroidDemo.Controller",
+    "name": "AsteroidsDemo.View",
     "rootNamespace": "",
     "references": [
-        "GUID:e66fd5045034fb64bb5054907b9e861c",
-        "GUID:4a7cba5161f721147925560ea195929a",
-        "GUID:4c8090dcf6cf319498cda83eaee8a3c5",
-        "GUID:678b1cd9be080e74d85ec58bc7086edc",
         "GUID:773fd3c8c5b87d44bb25a50c104685f6"
     ],
     "includePlatforms": [],

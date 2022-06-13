@@ -2,11 +2,11 @@
 using System.Linq;
 using AsteroidsDemo.Scripts.Data;
 using AsteroidsDemo.Scripts.Effects;
-using AsteroidsDemo.Scripts.Entities.Controller;
 using AsteroidsDemo.Scripts.Entities.Controller.Impl;
 using AsteroidsDemo.Scripts.Interfaces;
-using AsteroidsDemo.Scripts.IOC;
+using AsteroidsDemo.Scripts.Interfaces.Services;
 using AsteroidsDemo.Scripts.Messages;
+using AsteroidsDemo.Scripts.ServiceResolving;
 using AsteroidsDemo.Scripts.Services.Input;
 using AsteroidsDemo.Scripts.Services.Messaging;
 using AsteroidsDemo.Scripts.Services.PositionResolver;
@@ -31,10 +31,12 @@ namespace AsteroidsDemo.Scripts.Startup
 
         private void Awake()
         {
-            Screen.SetResolution(1920, 1080, false);
             // TODO расчитывать границы исходя из соотношения сторон (сейчас работает корректно только на 16:9)
-
+            Screen.SetResolution(1920, 1080, false);
+            
             InitializeServices();
+
+            var messenger = _serviceLocator.GetService<IMessenger>();
 
             _spawner =
                 Instantiate(prefabData.SpawnerPrefab)
@@ -43,12 +45,12 @@ namespace AsteroidsDemo.Scripts.Startup
                     .WithPrefabs(prefabData);
 
             Instantiate(prefabData.VfxPlayer.GetComponent<VfxPlayer>())
-                .WithMessenger(_serviceLocator.GetService<IMessenger>())
+                .WithMessenger(messenger)
                 .WithPrefabs(prefabData);
 
             var canvas = FindObjectOfType<Canvas>();
-            Instantiate(prefabData.Hud, canvas.transform).WithMessenger(_serviceLocator.GetService<IMessenger>());
-            Instantiate(prefabData.GameOver, canvas.transform).WithMessenger(_serviceLocator.GetService<IMessenger>());
+            Instantiate(prefabData.Hud, canvas.transform).WithMessenger(messenger);
+            Instantiate(prefabData.GameOver, canvas.transform).WithMessenger(messenger);
         }
 
 

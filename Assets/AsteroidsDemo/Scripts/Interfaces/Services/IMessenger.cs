@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AsteroidsDemo.Scripts.Interfaces
+namespace AsteroidsDemo.Scripts.Interfaces.Services
 {
     public interface IMessenger : IService
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AsteroidsDemo.Scripts.Entities.View
 {
-    public class BulletView : PortableObjectView
+    public class BulletView : PortableObjectView, IBulletView
     {
         public event EventHandler<IObjectView> OnHit;
 

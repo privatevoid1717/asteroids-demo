@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using AsteroidsDemo.Scripts.Interfaces.View;
+using UnityEngine;
 
 namespace AsteroidsDemo.Scripts.Entities.View
 {
-    public class LaserView : MonoBehaviour
+    public class LaserView : MonoBehaviour, ILaserView
     {
         private LineRenderer _lineRenderer;
 
