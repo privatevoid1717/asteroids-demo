@@ -5,7 +5,7 @@ namespace AsteroidsDemo.Scripts.Startup.Chunks
 {
     public class RunnablesChunk
     {
-        private const int Capacity = 3;
+        private const int Capacity = 1000;
 
         private readonly List<IRunnable> _runnables = new();
 
@@ -27,7 +27,7 @@ namespace AsteroidsDemo.Scripts.Startup.Chunks
         {
             for (int i = 0; i < _runnables.Count; i++)
             {
-                _runnables[i].RunInUpdate();
+                _runnables[i].RunUpdate();
             }
         }
 

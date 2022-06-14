@@ -14,7 +14,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
         private readonly IMessenger _messenger;
         private float _lifeTime = 0.7f; // TODO в модель
 
-        public void RunInUpdate()
+        public void RunUpdate()
         {
             if (_lifeTime < 0)
             {

@@ -83,7 +83,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
             base.RunFixedUpdate();
         }
 
-        public void RunInUpdate()
+        public void RunUpdate()
         {
         }
 

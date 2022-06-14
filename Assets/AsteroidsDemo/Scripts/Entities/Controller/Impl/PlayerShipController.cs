@@ -120,7 +120,7 @@ namespace AsteroidsDemo.Scripts.Entities.Controller.Impl
             base.RunFixedUpdate();
         }
 
-        public void RunInUpdate()
+        public void RunUpdate()
         {
             if (_inputTracker.IsLaserActive && Model.Energy >= 0.1f)
             {

@@ -3,7 +3,7 @@
     public interface IRunnable
     {
         void RunFixedUpdate();
-        void RunInUpdate();
+        void RunUpdate();
         bool IsAlive { get; }
     }
 }
