@@ -31,7 +31,7 @@ namespace AsteroidsDemo.Scripts.Startup
 
         private ISpaceShipModel _playerModel;
 
-        private void Awake()
+        private void Awake2()
         {
             // TODO расчитывать границы исходя из соотношения сторон (сейчас работает корректно только на 16:9)
             Screen.SetResolution(1920, 1080, false);
@@ -88,7 +88,8 @@ namespace AsteroidsDemo.Scripts.Startup
         {
             _chunkRunner.Add(
                 _spawner.SpawnAlien(
-                    new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0), _playerModel));
+                    new Vector3(Random.Range(-100, 100), Random.Range(-100, 100), 0),
+                    _playerModel));
         }
 
         private void OnAsteroidDestroyed(AsteroidDestroyedMessage asteroidDestroyedMessage)
@@ -133,7 +134,8 @@ namespace AsteroidsDemo.Scripts.Startup
             for (var i = 0; i < minAsteroids; i++)
             {
                 _chunkRunner.Add(
-                    _spawner.SpawnAsteroid(new Vector3(Random.Range(-100, 100), Random.Range(-100, 100),
+                    _spawner.SpawnAsteroid(new Vector3(Random.Range(-100, 100),
+                        Random.Range(-100, 100),
                         0))); // TODO не спавнить на игрока
             }
 

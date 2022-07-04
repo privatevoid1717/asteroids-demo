@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c16520873a3d4bda96af0f18201e4966, type: 3}
+  m_Name: GameData
+  m_EditorClassIdentifier: 
+  <PlayerShipViewPrefab>k__BackingField: {fileID: 4242457990137058299, guid: 29b05ab6da5af76418a14854f00d0035, type: 3}
+  <AsteroidViewPrefab>k__BackingField: {fileID: 9089302164136689697, guid: 4229c0bff42044544b681e8df0c14bfe, type: 3}
+  <AlienViewPrefab>k__BackingField: {fileID: 0}
+  <PlayerInput>k__BackingField: {fileID: 2465082841945497104, guid: b7c9d414a09454845b74dc07864839cc, type: 3}
